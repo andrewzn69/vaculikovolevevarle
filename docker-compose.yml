@@ -7,7 +7,7 @@ networks:
 services:
   lavalink:
     # pin the image version to Lavalink v4
-    image: ghcr.io/lavalink-devs/lavalink:4
+    image: ghcr.io/lavalink-devs/lavalink:4.1.1
     container_name: lavalink
     restart: unless-stopped
     environment:
@@ -17,6 +17,9 @@ services:
       - SERVER_PORT=2333
       # set password for lavalink
       - LAVALINK_SERVER_PASSWORD=youshallnotpass
+      # Spotify credentials
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
     volumes:
       # mount application.yml from the same directory or use environment variables
       - ./application.yml:/opt/Lavalink/application.yml
