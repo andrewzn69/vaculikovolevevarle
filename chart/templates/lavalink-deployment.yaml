@@ -64,12 +64,18 @@ spec:
             httpGet:
               path: /version
               port: 2333
+              httpHeaders:
+                - name: Authorization
+                  value: $(LAVALINK_PASSWORD)
             initialDelaySeconds: 60
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /version
               port: 2333
+              httpHeaders:
+                - name: Authorization
+                  value: $(LAVALINK_PASSWORD)
             initialDelaySeconds: 30
             periodSeconds: 3
       volumes:
