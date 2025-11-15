@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    {{- include "vaculikovolevevarle.labels" . | nindent 4 }}
+    app.kubernetes.io/component: lavalink
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "vaculikovolevevarle.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: lavalink
+  template:
+    metadata:
+      labels:
+        {{- include "vaculikovolevevarle.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: lavalink
+    spec:
+      containers:
+        - name: lavalink
+          image: "{{ .Values.image.lavalink.repository }}:{{ .Values.image.lavalink.tag }}"
+          imagePullPolicy: {{ .Values.image.lavalink.pullPolicy }}
+          ports:
+            - name: lavalink
+              containerPort: 2333
+              protocol: TCP
+          env:
+            - name: _JAVA_OPTIONS
+              value: {{ .Values.lavalink.javaOpts | quote }}
+            - name: SERVER_PORT
+              value: "2333"
+            - name: LAVALINK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  key: LAVALINK_PASSWORD
+            - name: SPOTIFY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  key: SPOTIFY_CLIENT_ID
+            - name: SPOTIFY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  key: SPOTIFY_CLIENT_SECRET
+          volumeMounts:
+            - name: config
+              mountPath: /opt/Lavalink/application.yaml
+              subPath: application.yaml
+            {{- if .Values.persistence.lavalink.plugins.enabled }}
+            - name: plugins
+              mountPath: /opt/Lavalink/plugins
+            {{- end }}
+            {{- if .Values.persistence.lavalink.logs.enabled }}
+            - name: logs
+              mountPath: /opt/Lavalink/logs
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources.lavalink | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: 2333
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 2333
+            initialDelaySeconds: 30
+            periodSeconds: 3
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-config
+        {{- if .Values.persistence.lavalink.plugins.enabled }}
+        - name: plugins
+          persistentVolumeClaim:
+            claimName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-plugins-pvc
+        {{- end }}
+        {{- if .Values.persistence.lavalink.logs.enabled }}
+        - name: logs
+          persistentVolumeClaim:
+            claimName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-logs-pvc
+        {{- end }}
+

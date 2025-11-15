@@ -1,0 +1,62 @@
+{{- if .Values.persistence.lavalink.plugins.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-plugins-pv
+spec:
+  capacity:
+    storage: {{ .Values.persistence.lavalink.plugins.size }}
+  accessModes:
+    - {{ .Values.persistence.lavalink.plugins.accessMode }}
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=4.1
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: {{ .Values.persistence.lavalink.plugins.nfsServer }}#{{ .Values.persistence.lavalink.plugins.nfsPath }}#lavalink-plugins
+    volumeAttributes:
+      server: {{ .Values.persistence.lavalink.plugins.nfsServer | quote }}
+      share: {{ .Values.persistence.lavalink.plugins.nfsPath | quote }}
+{{- end }}
+---
+{{- if .Values.persistence.lavalink.logs.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-logs-pv
+spec:
+  capacity:
+    storage: {{ .Values.persistence.lavalink.logs.size }}
+  accessModes:
+    - {{ .Values.persistence.lavalink.logs.accessMode }}
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=4.1
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: {{ .Values.persistence.lavalink.logs.nfsServer }}#{{ .Values.persistence.lavalink.logs.nfsPath }}#lavalink-logs
+    volumeAttributes:
+      server: {{ .Values.persistence.lavalink.logs.nfsServer | quote }}
+      share: {{ .Values.persistence.lavalink.logs.nfsPath | quote }}
+{{- end }}
+---
+{{- if .Values.persistence.bot.logs.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-bot-logs-pv
+spec:
+  capacity:
+    storage: {{ .Values.persistence.bot.logs.size }}
+  accessModes:
+    - {{ .Values.persistence.bot.logs.accessMode }}
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=4.1
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: {{ .Values.persistence.bot.logs.nfsServer }}#{{ .Values.persistence.lavalink.logs.nfsPath }}#lavalink-logs
+    volumeAttributes:
+      server: {{ .Values.persistence.bot.logs.nfsServer | quote }}
+      share: {{ .Values.persistence.bot.logs.nfsPath | quote }}
+{{- end }}

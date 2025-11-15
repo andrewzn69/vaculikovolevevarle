@@ -1,0 +1,47 @@
+{{- if .Values.persistence.lavalink.plugins.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-plugins-pvc
+  namespace: {{ .Values.namespace.name }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.lavalink.plugins.accessMode }}
+  storageClassName: ""
+  volumeName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-plugins-pv
+  resources:
+    requests:
+      storage: {{ .Values.persistence.lavalink.plugins.size }}
+{{- end }}
+---
+{{- if .Values.persistence.lavalink.logs.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-logs-pvc
+  namespace: {{ .Values.namespace.name }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.lavalink.logs.accessMode }}
+  storageClassName: ""
+  volumeName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-logs-pv
+  resources:
+    requests:
+      storage: {{ .Values.persistence.lavalink.logs.size }}
+{{- end }}
+---
+{{- if .Values.persistence.bot.logs.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "vaculikovolevevarle.fullname" . }}-bot-logs-pvc
+  namespace: {{ .Values.namespace.name }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.bot.logs.accessMode }}
+  storageClassName: ""
+  volumeName: {{ include "vaculikovolevevarle.fullname" . }}-bot-logs-pv
+  resources:
+    requests:
+      storage: {{ .Values.persistence.bot.logs.size }}
+{{- end }}

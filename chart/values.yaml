@@ -1,0 +1,79 @@
+# namespace config
+namespace:
+  name: vaculikovolevevarle
+  create: true
+
+# image config
+image:
+  bot:
+    repository: ghcr.io/andrewzn69/vaculikovolevevarle
+    tag: latest
+    pullPolicy: Always
+  lavalink:
+    repository: ghcr.io/lavalink-devs/lavalink
+    tag: "4.1.1"
+    pullPolicy: IfNotPresent
+
+# resource limits
+resources:
+  bot:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  lavalink:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+
+# lavalink config
+lavalink:
+  port: 2333
+  javaOpts: "-Xmx2G"
+
+  # spotify plugin config
+  spotify:
+    countryCode: "CZ"
+    playlistLoadLimit: 50
+    albumLoadLimit: 20
+
+# secrets
+secrets:
+  botToken: "" # discord bot token
+  lavalinkPassword: "" # lavalink password
+  spotifyClientId: "" # spotify api client id
+  spotifyClientSecret: "" # spotify api client secret
+
+# service config
+service:
+  lavalink:
+    type: ClusterIP
+    port: 2333
+
+# storage for lavalink plugins and logs
+persistence:
+  lavalink:
+    plugins:
+      enabled: true
+      nfsServer: "100.64.100.64"
+      nfsPath: "/storage/apps/vaculikovolevevarle/lavalink-plugins"
+      size: 1Gi
+      accessMode: ReadWriteMany
+    logs:
+      enabled: true
+      nfsServer: "100.64.100.64"
+      nfsPath: "/storage/apps/vaculikovolevevarle/lavalink-logs"
+      size: 5Gi
+      accessMode: ReadWriteMany
+  bot:
+    logs:
+      enabled: true
+      nfsServer: "100.64.100.64"
+      nfsPath: "/storage/apps/vaculikovolevevarle/bot-logs"
+      size: 2Gi
+      accessMode: ReadWriteMany

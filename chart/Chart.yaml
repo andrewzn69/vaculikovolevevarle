@@ -1,0 +1,14 @@
+apiVersion: v2
+name: vaculikovolevevarle
+version: 0.1.0
+appVersion: "1.0.0"
+description: Discord bot with Lavalink support
+type: application
+keywords:
+  - discord
+  - bot
+  - music
+  - lavalink
+maintainers:
+  - name: andrewzn69
+    email: ondrejzeman23@gmail.com
