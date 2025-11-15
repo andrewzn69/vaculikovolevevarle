@@ -6,7 +6,7 @@ namespace:
 # image config
 image:
   bot:
-    repository: ghcr.io/andrewzn69/vaculikovolevevarle
+    repository: ghcr.io/andrewzn69/vaculikovolevevarle:latest
     tag: latest
     pullPolicy: Always
   lavalink:
