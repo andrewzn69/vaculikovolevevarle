@@ -45,14 +45,15 @@ lavalink:
       snapshot: false
 
   server:
-    password: "youshallnotpass"
+    password: "${LAVALINK_PASSWORD}"
     sources:
+      youtube: false
       bandcamp: true
       soundcloud: true
       twitch: true
       vimeo: true
       nico: true
-      http: false
+      http: true
       local: false
     filters:
       volume: true
