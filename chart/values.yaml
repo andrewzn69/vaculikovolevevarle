@@ -49,6 +49,10 @@ secrets:
   spotifyClientId: "" # spotify api client id
   spotifyClientSecret: "" # spotify api client secret
 
+# sealed secrets (legacy - use infisical instead)
+sealedSecrets:
+  enabled: false
+
 # service config
 service:
   lavalink:

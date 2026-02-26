@@ -41,11 +41,13 @@ spec:
                 secretKeyRef:
                   name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
                   key: SPOTIFY_CLIENT_ID
+                  optional: true
             - name: SPOTIFY_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
                   key: SPOTIFY_CLIENT_SECRET
+                  optional: true
           volumeMounts:
             - name: config
               mountPath: /opt/Lavalink/application.yaml
