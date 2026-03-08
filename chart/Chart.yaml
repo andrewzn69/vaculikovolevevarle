@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vaculikovolevevarle
-version: 0.1.0
+version: 0.2.0
 appVersion: "1.0.0"
 description: Discord bot with Lavalink support
 type: application
@@ -12,3 +12,7 @@ keywords:
 maintainers:
   - name: andrewzn69
     email: ondrejzeman23@gmail.com
+dependencies:
+  - name: common
+    version: 1.0.2
+    repository: oci://ghcr.io/andrewzn69

@@ -1,7 +1,6 @@
 # namespace config
 namespace:
   name: vaculikovolevevarle
-  create: true
 
 # image config
 image:
@@ -44,10 +43,18 @@ lavalink:
 
 # secrets
 secrets:
-  botToken: "" # discord bot token
-  lavalinkPassword: "" # lavalink password
-  spotifyClientId: "" # spotify api client id
-  spotifyClientSecret: "" # spotify api client secret
+  enabled: true
+  type: infisical
+  infisical:
+    hostAPI: https://eu.infisical.com
+    projectSlug: novigrad
+    envSlug: prod
+    secretsPath: /bots/vaculikovolevevarle
+    auth:
+      credentialsSecretName: infisical-universal-auth
+      credentialsSecretNamespace: infisical-system
+    managedSecret:
+      creationPolicy: Owner
 
 # sealed secrets (legacy - use infisical instead)
 sealedSecrets:
@@ -63,21 +70,9 @@ service:
 persistence:
   lavalink:
     plugins:
-      enabled: true
-      nfsServer: "100.64.100.64"
-      nfsPath: "/storage/apps/vaculikovolevevarle/lavalink-plugins"
-      size: 1Gi
-      accessMode: ReadWriteMany
+      enabled: false
     logs:
-      enabled: true
-      nfsServer: "100.64.100.64"
-      nfsPath: "/storage/apps/vaculikovolevevarle/lavalink-logs"
-      size: 5Gi
-      accessMode: ReadWriteMany
+      enabled: false
   bot:
     logs:
-      enabled: true
-      nfsServer: "100.64.100.64"
-      nfsPath: "/storage/apps/vaculikovolevevarle/bot-logs"
-      size: 2Gi
-      accessMode: ReadWriteMany
+      enabled: false

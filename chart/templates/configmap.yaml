@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-config
-  namespace: {{ .Values.namespace.name }}
+  name: {{ include "common.fullname" . }}-lavalink-config
+  namespace: {{ .Values.namespace }}
   labels:
-    {{- include "vaculikovolevevarle.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
 data:
   application.yaml: |
     server:
@@ -33,10 +33,13 @@ data:
         remoteCipher:
           url: "https://cipher.kikkia.dev/"
           userAgent: "vaculikovolevevarle-bot"
-          clients:
-            - ANDROID
-            - WEB
-            - ANDROID_VR
+        pot:
+          token: "${YOUTUBE_PO_TOKEN}"
+          visitorData: "${YOUTUBE_VISITOR_DATA}"
+        clients:
+          - ANDROID
+          - WEB
+          - ANDROID_VR
           WEB:
             playback: false
           TVHTML5EMBEDDED:

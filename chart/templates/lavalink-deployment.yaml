@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink
-  namespace: {{ .Values.namespace.name }}
+  name: {{ include "common.fullname" . }}-lavalink
+  namespace: {{ .Values.namespace }}
   labels:
-    {{- include "vaculikovolevevarle.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: lavalink
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "vaculikovolevevarle.selectorLabels" . | nindent 6 }}
+      {{- include "common.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: lavalink
   template:
     metadata:
       labels:
-        {{- include "vaculikovolevevarle.selectorLabels" . | nindent 8 }}
+        {{- include "common.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: lavalink
     spec:
       containers:
@@ -24,29 +24,41 @@ spec:
           imagePullPolicy: {{ .Values.image.lavalink.pullPolicy }}
           ports:
             - name: lavalink
-              containerPort: 2333
+              containerPort: {{ .Values.lavalink.port }}
               protocol: TCP
           env:
             - name: _JAVA_OPTIONS
               value: {{ .Values.lavalink.javaOpts | quote }}
             - name: SERVER_PORT
-              value: "2333"
+              value: {{ .Values.lavalink.port | quote }}
             - name: LAVALINK_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  name: {{ include "common.fullname" . }}
                   key: LAVALINK_PASSWORD
             - name: SPOTIFY_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  name: {{ include "common.fullname" . }}
                   key: SPOTIFY_CLIENT_ID
                   optional: true
             - name: SPOTIFY_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "vaculikovolevevarle.fullname" . }}-secrets
+                  name: {{ include "common.fullname" . }}
                   key: SPOTIFY_CLIENT_SECRET
+                  optional: true
+            - name: YOUTUBE_PO_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "common.fullname" . }}
+                  key: YOUTUBE_PO_TOKEN
+                  optional: true
+            - name: YOUTUBE_VISITOR_DATA
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "common.fullname" . }}
+                  key: YOUTUBE_VISITOR_DATA
                   optional: true
           volumeMounts:
             - name: config
@@ -64,26 +76,26 @@ spec:
             {{- toYaml .Values.resources.lavalink | nindent 12 }}
           livenessProbe:
             tcpSocket:
-              port: 2333
+              port: {{ .Values.lavalink.port }}
             initialDelaySeconds: 60
             periodSeconds: 10
           readinessProbe:
             tcpSocket:
-              port: 2333
+              port: {{ .Values.lavalink.port }}
             initialDelaySeconds: 30
             periodSeconds: 3
       volumes:
         - name: config
           configMap:
-            name: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-config
+            name: {{ include "common.fullname" . }}-lavalink-config
         {{- if .Values.persistence.lavalink.plugins.enabled }}
         - name: plugins
           persistentVolumeClaim:
-            claimName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-plugins-pvc
+            claimName: {{ include "common.fullname" . }}-lavalink-plugins-pvc
         {{- end }}
         {{- if .Values.persistence.lavalink.logs.enabled }}
         - name: logs
           persistentVolumeClaim:
-            claimName: {{ include "vaculikovolevevarle.fullname" . }}-lavalink-logs-pvc
+            claimName: {{ include "common.fullname" . }}-lavalink-logs-pvc
         {{- end }}
 
