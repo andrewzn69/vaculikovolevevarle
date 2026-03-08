@@ -1,36 +1,45 @@
 ## build runner
 FROM node:lts-alpine as build-runner
 
-# Set temp directory
+# set temp directory
 WORKDIR /tmp/app
 
-# Move package.json
-COPY package.json .
+# install pnpm
+RUN npm install -g pnpm
 
-# Install dependencies
-RUN npm install
+# copy dependency files
+COPY package.json pnpm-lock.yaml ./
+COPY patches ./patches
 
-# Move source files
+# install dependencies
+RUN pnpm install --frozen-lockfile
+
+# move source files
 COPY src ./src
 COPY tsconfig.json   .
 
-# Build project
-RUN npm run build
+# build project
+RUN pnpm run build
 
 ## production runner
 FROM node:lts-alpine as prod-runner
 
-# Set work directory
+# set work dir
 WORKDIR /app
 
-# Copy package.json from build-runner
+# install pnpm
+RUN npm install -g pnpm
+
+# copy package files and patches from build-runner
 COPY --from=build-runner /tmp/app/package.json /app/package.json
+COPY --from=build-runner /tmp/app/pnpm-lock.yaml /app/pnpm-lock.yaml
+COPY --from=build-runner /tmp/app/patches /app/patches
 
-# Install dependencies
-RUN npm install --omit=dev
+# install production deps
+RUN pnpm install --frozen-lockfile --prod
 
-# Move build files
+# move build files
 COPY --from=build-runner /tmp/app/build /app/build
 
-# Start bot
-CMD [ "npm", "run", "start" ]
+# start bot
+CMD [ "pnpm", "run", "start" ]
