@@ -46,7 +46,7 @@ secrets:
   type: infisical
   infisical:
     hostAPI: https://eu.infisical.com
-    projectSlug: novigrad
+    projectSlug: vizima
     envSlug: prod
     secretsPath: /bots/vaculikovolevevarle
     auth:
