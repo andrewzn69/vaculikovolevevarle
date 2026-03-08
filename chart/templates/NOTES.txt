@@ -2,26 +2,14 @@ Discord Bot has been deployed!
 
 To check the status of the deployment:
 
-  kubectl get pods -n {{ .Values.namespace.name }}
+  kubectl get pods -n {{ .Values.namespace }}
 
 To view bot logs:
 
-  kubectl logs -n {{ .Values.namespace.name }} -l app.kubernetes.io/component=bot -f
+  kubectl logs -n {{ .Values.namespace }} -l app.kubernetes.io/component=bot -f
 
 To view lavalink logs:
 
-  kubectl logs -n {{ .Values.namespace.name }} -l app.kubernetes.io/component=lavalink -f
-
-{{- if not .Values.secrets.botToken }}
-
-WARNING: You need to seal your secrets!
-
-1. Create a secrets.yaml file with your actual values
-2. Use kubeseal to encrypt it:
-
-  kubeseal --format=yaml < secrets.yaml > sealed-secrets.yaml
-
-3. Update values.yaml with the encrypted values
-{{- end }}
+  kubectl logs -n {{ .Values.namespace }} -l app.kubernetes.io/component=lavalink -f
 
 Enjoy your bot.
