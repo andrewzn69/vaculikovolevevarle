@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@discordx/lava-player@2.1.5':
+    hash: 6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594
+    path: patches/@discordx__lava-player@2.1.5.patch
+
 importers:
 
   .:
@@ -11,6 +16,9 @@ importers:
       '@discordx/importer':
         specifier: ^1.3.3
         version: 1.3.3
+      '@discordx/lava-player':
+        specifier: ^2.1.5
+        version: 2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594)
       '@discordx/plugin-lava-player':
         specifier: ^3.0.1
         version: 3.0.1(discord.js@14.25.1)(discordx@11.13.3(discord.js@14.25.1))
@@ -728,7 +736,7 @@ snapshots:
 
   '@discordx/internal@1.2.0': {}
 
-  '@discordx/lava-player@2.1.5':
+  '@discordx/lava-player@2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594)':
     dependencies:
       '@types/backoff': 2.5.5
       backoff: 2.5.0
@@ -737,9 +745,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@discordx/lava-queue@4.0.9(@discordx/lava-player@2.1.5)(discord.js@14.25.1)':
+  '@discordx/lava-queue@4.0.9(@discordx/lava-player@2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594))(discord.js@14.25.1)':
     dependencies:
-      '@discordx/lava-player': 2.1.5
+      '@discordx/lava-player': 2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594)
       discord.js: 14.25.1
       lodash: 4.17.23
 
@@ -750,8 +758,8 @@ snapshots:
 
   '@discordx/plugin-lava-player@3.0.1(discord.js@14.25.1)(discordx@11.13.3(discord.js@14.25.1))':
     dependencies:
-      '@discordx/lava-player': 2.1.5
-      '@discordx/lava-queue': 4.0.9(@discordx/lava-player@2.1.5)(discord.js@14.25.1)
+      '@discordx/lava-player': 2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594)
+      '@discordx/lava-queue': 4.0.9(@discordx/lava-player@2.1.5(patch_hash=6e9fb73f33f37cf626e7a5c51223ccfc55c5ddd38fa3b9152164f3be22c7d594))(discord.js@14.25.1)
       '@discordx/pagination': 4.4.0(discord.js@14.25.1)
       discord.js: 14.25.1
       discordx: 11.13.3(discord.js@14.25.1)

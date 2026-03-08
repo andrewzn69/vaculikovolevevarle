@@ -1,0 +1,14 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 4b7109f5bd5a25e606725bd838734c851d5b9e09..3f851cc61f1f00b3dc31bbf0596024fc19c64596 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -548,7 +548,8 @@ var BaseNode = class extends EventEmitter2 {
+       voice: {
+         endpoint: server.endpoint,
+         sessionId: state.session_id,
+-        token: server.token
++        token: server.token,
++        channelId: state.channel_id
+       }
+     });
+     this._expectingConnection.delete(guildId);
