@@ -40,12 +40,12 @@ data:
           - ANDROID
           - WEB
           - ANDROID_VR
-          WEB:
-            playback: false
-          TVHTML5EMBEDDED:
-            playlistLoading: false
-            videoLoading: false
-            searching: false
+        WEB:
+          playback: false
+        TVHTML5EMBEDDED:
+          playlistLoading: false
+          videoLoading: false
+          searching: false
     lavalink:
       plugins:
         - dependency: "dev.lavalink.youtube:youtube-plugin:1.16.0"
