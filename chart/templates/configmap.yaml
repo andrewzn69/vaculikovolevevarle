@@ -42,7 +42,7 @@ data:
           - ANDROID_VR
         WEB:
           playback: false
-        TVHTML5EMBEDDED:
+        TVHTML5_SIMPLY:
           playlistLoading: false
           videoLoading: false
           searching: false
