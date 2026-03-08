@@ -37,11 +37,13 @@ data:
           token: "${YOUTUBE_PO_TOKEN}"
           visitorData: "${YOUTUBE_VISITOR_DATA}"
         clients:
-          - ANDROID
           - WEB
+          - MWEB
           - ANDROID_VR
         WEB:
-          playback: false
+          playback: true
+        MWEB:
+          playback: true
         TVHTML5_SIMPLY:
           playlistLoading: false
           videoLoading: false
@@ -78,7 +80,7 @@ data:
         bufferDurationMs: 400
         frameBufferDurationMs: 5000
         opusEncodingQuality: 10
-        resamplingQuality: LOW
+        resamplingQuality: HIGH
         trackStuckThresholdMs: 10000
         useSeekGhosting: true
         youtubePlaylistLoadLimit: 6
