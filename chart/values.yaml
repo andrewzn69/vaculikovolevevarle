@@ -1,6 +1,5 @@
 # namespace config
-namespace:
-  name: vaculikovolevevarle
+namespace: vaculikovolevevarle
 
 # image config
 image:
