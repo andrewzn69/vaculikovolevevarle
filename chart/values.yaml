@@ -9,7 +9,7 @@ image:
     pullPolicy: Always
   lavalink:
     repository: ghcr.io/lavalink-devs/lavalink
-    tag: "4.1.1"
+    tag: "4.2.2"
     pullPolicy: IfNotPresent
 
 # resource limits
